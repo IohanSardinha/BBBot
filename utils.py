@@ -5,10 +5,13 @@ from credentials import mail,password
 from PIL import Image
 
 def get_answers():
-    f = open("answers.txt",'r')
-    r = [line[0:-1] for line in f]
-    f.close()
-    return r
+    try:
+        f = open("answers.txt",'r')
+        r = [line[0:-1] for line in f]
+        f.close()
+        return r
+    except:
+        return []
 
 def strip_accents(s):
    return ''.join(c for c in unicodedata.normalize('NFD', s)
