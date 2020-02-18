@@ -17,7 +17,7 @@ def crop_image(file_name):
         im = Image.open(file_name)
         im1 = im.crop((left,top,right,bottom)).convert("RGB")
         im1 = remove_stripes(im1)
-        im1.save('objects/'+'({}).png'.format(num_files))
+        im1.save('objects/'+' ({}).png'.format(num_files))
         left += 53
         right += 53
         num_files += 1
