@@ -5,6 +5,7 @@ from datetime import datetime
 from PIL import Image
 from utils import *
 import os
+from pathlib import Path
 
 def crop_image(file_name):
     left = 0
@@ -51,6 +52,9 @@ def get_images(size):
     save_answers(objects)
 
 if __name__ == '__main__':
+
+    Path("original_images/").mkdir(parents=True, exist_ok=True)
+    Path("objects/").mkdir(parents=True, exist_ok=True)
 
     VOTE_URL = 'https://gshow.globo.com/realities/bbb/bbb20/votacao/paredao-bbb20-quem-voce-quer-eliminar-babu-lucas-ou-victor-hugo-24ddad72-6fcd-43ff-a9d0-a3e2c4cfa8e3.ghtml'
 
