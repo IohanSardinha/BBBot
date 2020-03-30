@@ -1,7 +1,9 @@
 from selenium import webdriver
 from time import sleep
 from urllib.request import urlretrieve
-from credentials import mail,password
+from credentials import VOTE_URL, VOTE_OPTION
+from credentials import mail as MAIL
+from credentials import password as PASSWORD
 from datetime import datetime
 from PIL import Image
 from utils import *
@@ -29,7 +31,6 @@ def click_by_index(index):
 
 def vote_first():
     captcha = 0
-
     image = driver.find_element_by_xpath('//*[@id="roulette-root"]/div/div[1]/div[4]/div[{0}]/div[2]/div/div/div[2]/div/div[2]/img'.format(option))
     action = webdriver.common.action_chains.ActionChains(driver)
     action.move_to_element_with_offset(image, 53*captcha + 10, 5)
@@ -70,9 +71,9 @@ def get_captcha():
     urlretrieve(src, "captcha.png")
     return 'captcha.png'
 
-def vote_with_model():
+def vote_with_model(url):
     total, wright = 0,1
-    driver.get(VOTE_URL)
+    driver.get(url)
     sleep(delay)
     select_participant(driver,delay,option)
     while True:
@@ -99,22 +100,27 @@ def vote_with_model():
         new_image.click()
         sleep(delay)
 
+def start_bot(opt, mail, password,url=VOTE_URL,delay_ = 2.5):
+    global delay
+    delay = delay_
+    global option
+    option = opt
+    global driver
+    driver = get_driver("Opera")
+
+    global CATEGORIES
+    CATEGORIES = get_answers()
+
+    global model
+    model = tf.keras.models.load_model("CAPTCHA.model")
+    model.load_weights('CAPTCHA.h5')
+    login(driver,delay,mail,password)
+    while True:
+        try:
+            vote_with_model(url)
+        except:
+            pass
+
+
 if __name__ == '__main__':
-   
-   VOTE_URL = 'https://gshow.globo.com/realities/bbb/bbb20/votacao/paredao-bbb20-quem-voce-quer-eliminar-babu-lucas-ou-victor-hugo-24ddad72-6fcd-43ff-a9d0-a3e2c4cfa8e3.ghtml'
-   delay = 2.5
-
-   option = 2 #Participant to vote, from top to bottom starting with 1
-
-   driver = get_driver("Opera")
-    
-   CATEGORIES = get_answers()
-
-   model = tf.keras.models.load_model("CAPTCHA.model")
-   model.load_weights('CAPTCHA.h5')
-   login(driver,delay)
-   while True:
-      try:
-         vote_with_model()
-      except:
-         pass
+    start_bot(VOTE_OPTION,MAIL,PASSWORD)

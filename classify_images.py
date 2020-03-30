@@ -10,8 +10,8 @@ def button_action(btn):
     global curr_img
     global curr_img_text
     im = Image.open('objects/ ({0}).png'.format(curr_img))
-    im.save('train/'+btn+('/({0}).png'.format(curr_img)))
-    curr_img += 1
+    im.save('train/'+btn+('/ ({0}).png'.format(curr_img)))
+    curr_img -= 1
     img = ImageTk.PhotoImage(Image.open('objects/ ({0}).png'.format(curr_img)))
     panel = Label(m,image = img)
     panel.place(x=400-30,y=20)
@@ -23,7 +23,7 @@ if __name__ == '__main__':
         Path("train/"+fold+"/").mkdir(parents=True, exist_ok=True)
 
     m = Tk()
-    m.geometry("800x500")
+    m.geometry("800x550")
 
     try:
         f = open("last",'r')
@@ -32,6 +32,8 @@ if __name__ == '__main__':
         f.close()
     except:
         curr_img = 1
+        f = open("last","w")
+        f.close()
         
     img = ImageTk.PhotoImage(Image.open('objects/ ({0}).png'.format(curr_img)))
     panel = Label(m,image = img)
@@ -45,14 +47,17 @@ if __name__ == '__main__':
 
     pos = 0
     cols = 6
-    rows = 10
+    rows = 12
     for i in range(cols):
         for j in range(rows):
-            t = words[pos]
-            action = partial(button_action,t)
-            button = Button(m,text=t,width = 16,command= action)
-            button.place(x=20+i*130,y=150+j*30)
-            pos+= 1
+            try:
+                t = words[pos]
+                action = partial(button_action,t)
+                button = Button(m,text=t,width = 16,command= action)
+                button.place(x=20+i*130,y=150+j*30)
+                pos+= 1
+            except:
+                pass
             
     m.mainloop()
     f = open("last",'w')

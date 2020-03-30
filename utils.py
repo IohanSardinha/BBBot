@@ -17,15 +17,15 @@ def strip_accents(s):
    return ''.join(c for c in unicodedata.normalize('NFD', s)
                   if unicodedata.category(c) != 'Mn')
 
-def login(driver,delay):
+def login(driver,delay,eml=mail,passw=password):
 
     driver.get("https://login.globo.com/login/151")
 
     email = driver.find_element_by_xpath('//*[@id="login"]')
-    email.send_keys(mail)
+    email.send_keys(eml)
 
     pswd = driver.find_element_by_xpath('//*[@id="password"]')
-    pswd.send_keys(password)
+    pswd.send_keys(passw)
 
     enter = driver.find_element_by_xpath('//*[@id="login-form"]/div[6]/button')
     enter.click()
@@ -35,7 +35,6 @@ def login(driver,delay):
 def select_participant(driver,delay,option):
     participant = driver.find_element_by_xpath('//*[@id="roulette-root"]/div/div[1]/div[4]/div[{0}]/div'.format(option))
     participant.click()
-
     sleep(delay)
 
 def remove_stripes(img):
@@ -61,5 +60,7 @@ def get_driver(browser):
        return webdriver.Opera()
     elif browser == "Chrome":
        return webdriver.Chrome()
+    elif browser == "Edge":
+        return webdriver.Edge()
     else:
        return webdriver.Ie()

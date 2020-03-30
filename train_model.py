@@ -91,7 +91,7 @@ if __name__ == "__main__":
     model.add(Dense(128))
     model.add(Activation("relu"))
 
-    model.add(Dense(600))
+    model.add(Dense(720))
     model.add(Activation("softmax"))
 
     model.compile(optimizer='adam',
@@ -99,7 +99,7 @@ if __name__ == "__main__":
                   metrics=['accuracy','mse','mae','mape'])
 
 
-    model.fit(train_images, train_labels, epochs=1, batch_size = 32, validation_split=0.1)
+    model.fit(train_images, train_labels, epochs=200, batch_size = 32, validation_split=0.1)
 
     test_loss, test_acc, test_mse, mae, mape = model.evaluate(train_images,  train_labels, verbose=2)
 
@@ -107,13 +107,13 @@ if __name__ == "__main__":
     predictions = model.predict(train_images)
 
     model_json = model.to_json()
-    with open("CAPTCHA_model.json", "w") as json_file :
+    with open("CAPTCHA_model_new.json", "w") as json_file :
             json_file.write(model_json)
 
-    model.save_weights("CAPTCHA_model.h5")
+    model.save_weights("CAPTCHA_model_new.h5")
     print("Saved model to disk")
 
-    model.save('CAPTCHA_model.model')
+    model.save('CAPTCHA_model_new.model')
 
     num_rows = 5
     num_cols = 3

@@ -15,8 +15,8 @@ def get_answers():
 
 CATEGORIES = get_answers()
 
-model = tf.keras.models.load_model("CAPTCHA.model")
-model.load_weights('CAPTCHA.h5')
+model = tf.keras.models.load_model("CAPTCHA_model_new.model")
+model.load_weights('CAPTCHA_model_new.h5')
 
 IMG_SIZE = 53
 
