@@ -6,7 +6,7 @@ Desenvolvido para motivos de estudo, sem nenhuma intensão de prejuditar o progr
 * Usando o modelo de previsão já criado
  
 ```
-python3 bbbot.py
+python bbbot.py
 ```
 
 
