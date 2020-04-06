@@ -5,6 +5,17 @@ Desenvolvido para motivos de estudo, sem nenhuma intensão de prejuditar o progr
 ## Como utilizar:
 Arquivo [creadentials.txt](https://github.com/IohanSardinha/BBBot/blob/master/credentials.txt) é onde ficam as informações de login, voto e url da votação
 
+* Bibliotecas necessarias:
+```
+  -tkinter
+  -selenium
+  -Pillow
+  -numpy
+  -cv2
+  -keras
+  -tensorflow
+  -tqdm
+```
 
 * Usando o modelo de previsão já criado
  
