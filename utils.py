@@ -1,7 +1,6 @@
 import unicodedata
 from selenium import webdriver
 from time import sleep
-from credentials import mail,password
 from PIL import Image
 
 def get_answers():
@@ -17,8 +16,15 @@ def strip_accents(s):
    return ''.join(c for c in unicodedata.normalize('NFD', s)
                   if unicodedata.category(c) != 'Mn')
 
-def login(driver,delay,eml=mail,passw=password):
+def login(driver,delay,eml='',passw=''):
 
+    if eml == '' or passw == '':
+        cred = loadCredentials()
+        if eml == '':
+            eml = cred['mail']
+        if passw == '':
+            passw = cred['password']
+            
     driver.get("https://login.globo.com/login/151")
 
     email = driver.find_element_by_xpath('//*[@id="login"]')
@@ -64,3 +70,9 @@ def get_driver(browser):
         return webdriver.Edge()
     else:
        return webdriver.Ie()
+
+def loadCredentials():
+    f = open('credentials.txt','r')
+    l = [line[:-1] for line in f]
+    f.close()
+    return {'mail':l[0],'password':l[1],'URL':l[2],'option':int(l[3])}

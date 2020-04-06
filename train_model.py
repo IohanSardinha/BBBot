@@ -91,7 +91,7 @@ if __name__ == "__main__":
     model.add(Dense(128))
     model.add(Activation("relu"))
 
-    model.add(Dense(720))
+    model.add(Dense(590))
     model.add(Activation("softmax"))
 
     model.compile(optimizer='adam',

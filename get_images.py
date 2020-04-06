@@ -5,7 +5,6 @@ from datetime import datetime
 from PIL import Image
 from utils import *
 import os
-from credentials import mail,password,VOTE_URL, VOTE_OPTION
 from pathlib import Path
 
 def crop_image(file_name):
@@ -18,7 +17,7 @@ def crop_image(file_name):
         im = Image.open(file_name)
         im1 = im.crop((left,top,right,bottom)).convert("RGB")
         im1 = remove_stripes(im1)
-        im1.save('objects/'+' ({}).png'.format(num_files))
+        im1.save('objects/'+' b({}).png'.format(num_files))
         print('objects/'+' ({}).png'.format(num_files))
         left += 53
         right += 53
@@ -49,7 +48,9 @@ def get_images(size):
         
         new_image = driver.find_element_by_xpath('//*[@id="roulette-root"]/div/div[1]/div[4]/div[{}]/div[2]/div/div/div[3]/button'.format(option) )
         new_image.click()
-        sleep(2)
+        sleep(1.8)
+        if(i%25 == 0):
+            save_answers(objects)
     save_answers(objects)
 
 if __name__ == '__main__':
@@ -57,16 +58,17 @@ if __name__ == '__main__':
     Path("original_images/").mkdir(parents=True, exist_ok=True)
     Path("objects/").mkdir(parents=True, exist_ok=True)
 
-    delay = 3
+    delay = 1
 
-    data_size = 100
+    data_size = 1000
     
     option = 1
 
-    driver = get_driver("Opera")
+    driver = get_driver("Chrome")
 
     CATEGORIES = get_answers()
 
     login(driver,delay)
-    driver.get(VOTE_URL)
+    driver.get(loadCredentials()['URL'])
     get_images(data_size)
+    driver.quit()
