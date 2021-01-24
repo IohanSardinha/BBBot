@@ -9,6 +9,6 @@ Desenvolvido para motivos de estudo, sem nenhuma intensão de prejuditar o progr
 O programa vai guardar o movimento do mouse e teclado até o usuário pressionar *Esc*, então repetirá o movimento guardado.
 
 ### Funcionalidades adicionais:
-    * Tab - Para de guardar até pressionar tab de novo
-    * Shift - Irá parar a execução dos movimentos, até o píxel da posição do mouse quando ter a mesma cor de quando pressionado o shift
+    * Shift - Para de guardar até pressionar tab de novo
+    * Control esquerdo - Irá parar a execução dos movimentos, até o píxel da posição do mouse quando ter a mesma cor de quando pressionado o shift
     * Esc - Para de guardar e executa os movimentos

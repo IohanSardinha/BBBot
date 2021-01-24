@@ -64,8 +64,9 @@ def on_click(x, y, button, pressed):
         last_time = curr_time
     
 def on_press(key):
+    print(key)
     global last_time
-    if key == keyboard.Key.tab:
+    if key == keyboard.Key.shift:
         global stopped
         stopped = not stopped
         if not stopped:
@@ -75,7 +76,7 @@ def on_press(key):
         else:
             print('Paused')
 
-    if key == keyboard.Key.shift:
+    if key == keyboard.Key.ctrl_l:
         print('will wait for color')
         actions.append(waitColor())
 
@@ -87,6 +88,7 @@ def on_press(key):
 def on_release(key):
     if key == keyboard.Key.esc:
         mouse_listener.stop()
+        keyboard_listener.stop()
         for i in range(10):
             playActions()
         return False
