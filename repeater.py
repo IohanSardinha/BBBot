@@ -2,6 +2,7 @@ from pynput import mouse
 from pynput import keyboard
 from time import sleep, time
 from PIL import ImageGrab as screen
+from threading import Thread
 
 class move:
     def __init__(self,x,y,delay):
@@ -64,7 +65,6 @@ def on_click(x, y, button, pressed):
         last_time = curr_time
     
 def on_press(key):
-    print(key)
     global last_time
     if key == keyboard.Key.shift:
         global stopped
@@ -87,16 +87,22 @@ def on_press(key):
 
 def on_release(key):
     if key == keyboard.Key.esc:
-        mouse_listener.stop()
-        keyboard_listener.stop()
-        for i in range(10):
-            playActions()
-        return False
+        global playing
+        if not playing:
+            mouse_listener.stop()
+            playing = True
+            actions_thread.start()
+        else:
+            playing = False
+            keyboard_listener.stop()
 
 def playActions():
     print('Playing...')
-    for action in actions:
-        action.play()
+    while playing:
+        for action in actions:
+            if not playing:
+                break
+            action.play()
     print('Finished!')
 
 mouse_listener = mouse.Listener(
@@ -110,6 +116,8 @@ keyboard_listener = keyboard.Listener(
 mouse_controller = mouse.Controller()
 keyboard_controller = keyboard.Controller()
 stopped = False
+playing = False
+actions_thread = Thread(target=playActions)
 last_time = time()
 actions = []
 mouse_listener.start()
